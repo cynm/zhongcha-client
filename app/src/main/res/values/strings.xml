@@ -15,5 +15,6 @@
         completions."
     </string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="scan_tips">please duizhun</string>
 
 </resources>

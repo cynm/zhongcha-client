@@ -50,6 +50,8 @@
             android:name="com.chengying.root.registe.RegistActivity"
             android:label="regist" >
         </activity>
+        <activity android:name="com.zbar.lib.CaptureActivity" >
+        </activity>
     </application>
 
 </manifest>

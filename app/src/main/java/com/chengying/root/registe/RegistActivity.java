@@ -3,21 +3,19 @@ package com.chengying.root.registe;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,11 +26,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.chengying.root.network.AppConfig;
+import com.chengying.root.network.MySocketClient;
+import com.chengying.root.tools.Tools;
+import com.chengying.root.zhongcha.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import com.chengying.root.zhongcha.R;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -69,14 +73,14 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.phone);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.regist || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -194,7 +198,7 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return email.matches("^[1][358][0-9]{9}$");
     }
 
     private boolean isPasswordValid(String password) {
@@ -298,28 +302,51 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mPhone;
         private final String mPassword;
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
+            mPhone = email;
             mPassword = password;
         }
-
+        int resultCode=0;
+        Map<String,String>usermap;
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            Map<String,String> map=new HashMap<String,String>();
+            map.put("id",mPhone);
+            map.put("password", mPassword);
+            String resultStr =  MySocketClient.getInstance().send(AppConfig.regiUrl, map);
+            if(resultStr==null){
+                resultCode=4;//net work error
                 return false;
             }
+            usermap= Tools.JArrayToMap(resultStr);
+            if(usermap.get("result").equals("true")){
+                //reg ok
+                AppConfig.userMap=usermap;// write to Appconfig
+                resultCode=0;
+                return false;
+            }
+            else if(usermap.get("result").equals("false")){
+                if(usermap.get("resultCode").equals("1")){
+                    // user is  exist
+                    resultCode=1;
+                    return false;
+
+                }
+
+
+            }
+
+
+
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+                if (pieces[0].equals(mPhone)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
@@ -337,8 +364,21 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                if(resultCode==4)//network error
+                {
+                    Toast.makeText(RegistActivity.this, MySocketClient.STATE_TIME_OUT, Toast.LENGTH_SHORT).show();
+
+                } else if(resultCode==1){
+                    //user is exist
+                    mEmailView.setError(usermap.get("info"));
+                    mEmailView.requestFocus();
+
+                }else
+                if(resultCode==0){
+                    //ok
+                    Toast.makeText(RegistActivity.this,usermap.get("info"),Toast.LENGTH_SHORT).show();
+                    RegistActivity.this.finish();
+                }
             }
         }
 

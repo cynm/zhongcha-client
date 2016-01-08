@@ -7,6 +7,10 @@ import java.util.Map;
 
 public class AppConfig {
 	public static Map<String,String> userMap;
+	public static Map<String,String> regeMap;
+	public static String loginUrl="LoginProcesser";
+	public static String regiUrl="RegesterProcesser";
+
 	public static AppConfig app=new AppConfig();
 	private String httpPort;
 	public String getHttpPort() {

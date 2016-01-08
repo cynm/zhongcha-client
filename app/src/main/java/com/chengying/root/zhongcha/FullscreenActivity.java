@@ -1,24 +1,18 @@
 package com.chengying.root.zhongcha;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import com.chengying.root.homePage.HomeActivity;
 import com.chengying.root.myPage.MyActivity;
 import com.chengying.root.shaoyishaoPage.ShaoyiShaoActivity;
-import android.widget.TabHost.TabSpec;
 
 public class FullscreenActivity extends TabActivity implements   View.OnClickListener {
     LinearLayout m_home;
@@ -85,9 +79,11 @@ tabHost.setCurrentTabByTag(TAB_HOME);
                 tabHost.setCurrentTabByTag(TAB_HOME);;
             break;
             case R.id.shaoyishao:
+
             case R.id.m_s:
-                Toast.makeText(this,"sss",Toast.LENGTH_LONG).show();
+
                 tabHost.setCurrentTabByTag(TAB_SHAOYISHAO);
+
                 break;
             case R.id.my:
             case R.id.m_m:
