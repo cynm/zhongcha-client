@@ -45,11 +45,6 @@ public class AppConfig {
 		this.httpAddress = httpAddress;
 	}
 	public String httpAddress;
-
-
-
-
-
 	public static int TIMEOUT=6000;
 
 	public static String CashPath=Environment.getExternalStorageDirectory().getPath()+"/zhongcha/";

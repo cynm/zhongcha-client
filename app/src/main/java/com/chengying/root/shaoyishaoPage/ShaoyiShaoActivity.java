@@ -8,13 +8,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.style.SuggestionSpan;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengying.root.network.AppConfig;
 import com.chengying.root.network.MySocketClient;
+import com.chengying.root.suggess.SuggessAdapter;
 import com.chengying.root.tools.Tools;
 import com.zbar.lib.CaptureActivity;
 import com.chengying.root.zhongcha.R;
@@ -23,6 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ShaoyiShaoActivity extends Activity {
@@ -66,7 +72,7 @@ public class ShaoyiShaoActivity extends Activity {
     public TextView tvGoodsPrice;
     public TextView tvUpdateTime;
 
-
+    public ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +82,7 @@ public class ShaoyiShaoActivity extends Activity {
         tvGoodsName=(TextView)this.findViewById(R.id.v0_name);
         tvGoodsPrice=(TextView)this.findViewById(R.id.v1_name);
         tvUpdateTime=(TextView)this.findViewById(R.id.update_time);
+        listView=(ListView)this.findViewById(R.id.thesuggesstion);
         this.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +104,7 @@ public class ShaoyiShaoActivity extends Activity {
         public  int resultCode=0;
         Map<String,String> resultMap=null;
         Map<String,String> goodsInfo=null;
+        List<Map<String,String>> data;
         String ecode;
         public GoodsGetTask(String ecode){
             this.ecode=ecode;
@@ -142,6 +150,21 @@ public class ShaoyiShaoActivity extends Activity {
             if (success) {
 
                 fillGoodsInfoForm(goodsInfo);
+                // for test
+                data=new ArrayList<Map<String,String>>();
+                for(int i=0;i<10;i++) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("shopName", "武昌量贩"+i);
+                    map.put("goodsNmae", "鸡蛋");
+                    map.put("price", "0.5");
+                    map.put("unit", "个");
+                    map.put("distance", "300");
+                    data.add(map);
+                }
+                SuggessAdapter adapter=new SuggessAdapter(ShaoyiShaoActivity.this,data);
+                listView.setAdapter(adapter);
+
+
             }else {
                 if(resultCode==4)
                 {

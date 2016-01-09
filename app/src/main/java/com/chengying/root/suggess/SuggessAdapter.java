@@ -15,11 +15,11 @@ import java.util.Map;
 /**
  * Created by root on 16-1-9.
  */
-public class SugessAdapter extends BaseAdapter {
+public class SuggessAdapter extends BaseAdapter {
     List<Map<String, String>> data;
     Context context;
 
-    public SugessAdapter(Context context, List<Map<String, String>> data) {
+    public SuggessAdapter(Context context, List<Map<String, String>> data) {
         this.context = context;
         this.data = data;
     }
