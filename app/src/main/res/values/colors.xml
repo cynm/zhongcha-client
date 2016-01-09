@@ -12,4 +12,5 @@
     <color name="accent_material_light">#35fbfb</color>
     <color name="background_material_light">#21efef</color>
     <color name="primary_material_light">#37fbfb</color>
+    <color name="transparent_white">#cccccc</color>
 </resources>
