@@ -10,7 +10,10 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginTop="16dp" android:text="扫一扫"
         android:textStyle="bold" />
-    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
+    <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
         android:layout_below="@id/button1"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" android:visibility="gone" />
@@ -82,7 +85,7 @@
                 android:text="更新时间"
                 />
             <TextView
-                android:id="@+id/add_time"
+                android:id="@+id/update_time"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="today"

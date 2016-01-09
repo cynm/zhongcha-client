@@ -13,6 +13,26 @@ import java.util.Map;
  * Created by root on 16-1-6.
  */
 public class Tools {
+    public static Map<String,String> JArrayToMap(String jsonArray,int postion){
+        Map<String,String>map = new HashMap<>();
+        try {
+            JSONArray jsa=new JSONArray(jsonArray);
+            JSONObject jo=jsa.getJSONObject(postion);
+            Iterator<String> keys = jo.keys();
+            String key;
+            while(keys.hasNext()){
+                key=keys.next();
+
+                map.put(key,jo.getString(key));
+
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
     public static Map<String,String> JArrayToMap(String jsonArray){
         Map<String,String>map = new HashMap<>();
         try {

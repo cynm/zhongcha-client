@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chengying.root.network.AppConfig;
 import com.chengying.root.network.MySocketClient;
@@ -58,23 +60,43 @@ public class ShaoyiShaoActivity extends Activity {
     }
     public View goodsFormView;
     public  View mProgressView;
+
+
+    public TextView tvGoodsName;
+    public TextView tvGoodsPrice;
+    public TextView tvUpdateTime;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shaoyi_shao);
         goodsFormView=(LinearLayout)this.findViewById(R.id.goods_form_view);
         mProgressView = findViewById(R.id.login_progress);
+        tvGoodsName=(TextView)this.findViewById(R.id.v0_name);
+        tvGoodsPrice=(TextView)this.findViewById(R.id.v1_name);
+        tvUpdateTime=(TextView)this.findViewById(R.id.update_time);
         this.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ShaoyiShaoActivity.this, CaptureActivity.class));
+                //startActivity(new Intent(ShaoyiShaoActivity.this, CaptureActivity.class));
+                showProgress(true);
+                GoodsGetTask mAuthTask = new GoodsGetTask("0001");
+                  mAuthTask.execute((Void) null);
             }
         });
+
+    }
+    public void fillGoodsInfoForm(Map<String,String> map){
+        tvGoodsName.setText(map.get("goodsname"));
+        tvGoodsPrice.setText(map.get("price"));
+        tvUpdateTime.setText(map.get("last_rfeash_time"));
 
     }
     public class GoodsGetTask extends AsyncTask<Void,Void,Boolean>{
         public  int resultCode=0;
         Map<String,String> resultMap=null;
+        Map<String,String> goodsInfo=null;
         String ecode;
         public GoodsGetTask(String ecode){
             this.ecode=ecode;
@@ -84,7 +106,7 @@ public class ShaoyiShaoActivity extends Activity {
             JSONArray ja=new JSONArray();
             JSONObject jo=new JSONObject();
             try {
-                jo.put("ecode",ecode);
+                jo.put("goods_ecode",ecode);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -94,7 +116,8 @@ public class ShaoyiShaoActivity extends Activity {
                 resultCode=4;//net work error
                 return false;
             }
-            resultMap= Tools.JArrayToMap(resultStr);
+            resultMap= Tools.JArrayToMap(resultStr,0);
+            goodsInfo=Tools.JArrayToMap(resultStr,1);
             if(resultMap.get("result").equals("true")){
                 //  ok
 
@@ -111,12 +134,23 @@ public class ShaoyiShaoActivity extends Activity {
 
 
             }
-            return true;
+            return false;
         }
         @Override
         protected void onPostExecute(final Boolean success) {
+            showProgress(false);
             if (success) {
-                finish();
+
+                fillGoodsInfoForm(goodsInfo);
+            }else {
+                if(resultCode==4)
+                {
+                    Toast.makeText(ShaoyiShaoActivity.this, MySocketClient.STATE_TIME_OUT, Toast.LENGTH_SHORT).show();
+
+                } else if(resultCode==1){
+
+                    Toast.makeText(ShaoyiShaoActivity.this, "not exist", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
