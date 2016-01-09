@@ -23,8 +23,10 @@
         android:id="@+id/top_mask"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:onClick="onBack"
         android:background="@mipmap/scan_mask"
-        android:contentDescription="@string/app_name" />
+        android:contentDescription="@string/app_name"
+        android:layout_below="@+id/title" />
 
     <RelativeLayout
         android:id="@+id/capture_crop_layout"

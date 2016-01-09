@@ -340,7 +340,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     //login ok
                     AppConfig.userMap=usermap;// write to Appconfig
                     resultCode=0;
-                    return false;
+                    return true;
                 }
                 else if(usermap.get("result").equals("false")){
                     if(usermap.get("resultCode").equals("1")){
@@ -385,6 +385,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                Toast.makeText(LoginActivity.this,usermap.get("info"),Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 if(resultCode==4)
@@ -398,11 +399,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mEmailView.setError(usermap.get("info"));
                     mEmailView.requestFocus();
 
-                }else
-                    if(resultCode==0){
-                        Toast.makeText(LoginActivity.this,usermap.get("info"),Toast.LENGTH_SHORT).show();
-                        LoginActivity.this.finish();
-                    }
+                }
             }
         }
 

@@ -30,7 +30,7 @@ public class AppConfig {
 	public static AppConfig getInstance(){
 		return app;
 	}
-	 public String ip="192.168.1.119";
+	 public String ip="172.25.73.3";
 
 	 public String getIp() {
 		return ip;
