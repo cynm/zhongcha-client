@@ -46,7 +46,7 @@
                 android:text="商品名称:"
                 />
     <TextView
-        android:id="@+id/type_name"
+        android:id="@+id/goods_name"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="白菜"
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="斤"
-        />
+        android:id="@+id/unit" />
         </LinearLayout>
         <LinearLayout
             android:layout_height="wrap_content"
