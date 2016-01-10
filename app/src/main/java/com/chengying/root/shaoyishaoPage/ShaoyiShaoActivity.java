@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.style.SuggestionSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -73,6 +74,7 @@ public class ShaoyiShaoActivity extends Activity {
     public TextView tvUpdateTime;
 
     public ListView listView;
+    public ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,7 @@ public class ShaoyiShaoActivity extends Activity {
         tvGoodsPrice=(TextView)this.findViewById(R.id.v1_name);
         tvUpdateTime=(TextView)this.findViewById(R.id.update_time);
         listView=(ListView)this.findViewById(R.id.thesuggesstion);
+        imageView=(ImageView)this.findViewById(R.id.goods_image);
         this.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +103,7 @@ public class ShaoyiShaoActivity extends Activity {
         tvUpdateTime.setText(map.get("last_rfeash_time"));
 
     }
+
     public class SmilarGoodsTask extends AsyncTask<Void,Void,Boolean>{
         String goodsName;
         String currentShopID;

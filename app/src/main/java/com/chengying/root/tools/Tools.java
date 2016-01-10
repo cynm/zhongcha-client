@@ -1,9 +1,12 @@
 package com.chengying.root.tools;
 
+import android.graphics.drawable.Drawable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -55,8 +58,9 @@ public class Tools {
     }
     public static List<Map<String,String>> JArrayToMaps(String jsonArray)
     {
-        Map<String,String>map =new HashMap<>();
-        List<Map<String,String>> list=null;
+        Map<String,String>map=null;
+        List<Map<String,String>> list;
+        list = new ArrayList<>();
         try {
             JSONArray jsa=new JSONArray(jsonArray);
             JSONObject jo=new JSONObject();
@@ -64,6 +68,7 @@ public class Tools {
                 jo=jsa.getJSONObject(i);
                 Iterator<String> keys = jo.keys();
                 String key;
+                map =new HashMap<String,String>();
                 while (keys.hasNext()) {
                     key = keys.next();
 
@@ -79,5 +84,6 @@ public class Tools {
         }
         return list;
     }
+
 
 }
