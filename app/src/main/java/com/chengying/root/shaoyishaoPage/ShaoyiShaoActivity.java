@@ -88,7 +88,7 @@ public class ShaoyiShaoActivity extends Activity {
             public void onClick(View v) {
                 //startActivity(new Intent(ShaoyiShaoActivity.this, CaptureActivity.class));
                 showProgress(true);
-                GoodsGetTask mAuthTask = new GoodsGetTask("0001");
+                GoodsGetTask mAuthTask = new GoodsGetTask("dsd222");
                   mAuthTask.execute((Void) null);
             }
         });
@@ -100,11 +100,68 @@ public class ShaoyiShaoActivity extends Activity {
         tvUpdateTime.setText(map.get("last_rfeash_time"));
 
     }
+    public class SmilarGoodsTask extends AsyncTask<Void,Void,Boolean>{
+        String goodsName;
+        String currentShopID;
+        public SmilarGoodsTask(String goodsName,String currentShopID){
+            this.goodsName=goodsName;
+            this.currentShopID=currentShopID;
+        }
+        /**
+         * Override this method to perform a computation on a background thread. The
+         * specified parameters are the parameters passed to {@link #execute}
+         * by the caller of this task.
+         * <p/>
+         * This method can call {@link #publishProgress} to publish updates
+         * on the UI thread.
+         *
+         * @param params The parameters of the task.
+         * @return A result, defined by the subclass of this task.
+         * @see #onPreExecute()
+         * @see #onPostExecute
+         * @see #publishProgress
+        */
+        List<Map<String ,String>> data=null;
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Map<String ,String> map0=new HashMap<String,String>();
+
+            map0.put("goodsName",goodsName);
+            map0.put("currentShopID",currentShopID);
+            String resultStr= MySocketClient.getInstance().send("GetSimiarGoodsInNearShopProcesser",map0);
+            if(resultStr==null){
+
+                return false;
+            }
+            data=Tools.JArrayToMaps(resultStr);
+//            Map<String,String> map=new HashMap<String,String>();
+//            map.put("goodsID",i+"");
+//            map.put("shopName", "武昌量贩"+i);
+//            map.put("goodsName", "鸡蛋");
+//            map.put("price", "0.5");
+//            map.put("unit", "个");
+//            map.put("distance", "300");
+//            data.add(map);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                SuggessAdapter adapter=new SuggessAdapter(ShaoyiShaoActivity.this,data);
+                listView.setAdapter(adapter);
+
+            }
+            else{
+                Toast.makeText(ShaoyiShaoActivity.this,"error",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     public class GoodsGetTask extends AsyncTask<Void,Void,Boolean>{
         public  int resultCode=0;
         Map<String,String> resultMap=null;
         Map<String,String> goodsInfo=null;
-        List<Map<String,String>> data;
+
         String ecode;
         public GoodsGetTask(String ecode){
             this.ecode=ecode;
@@ -150,20 +207,9 @@ public class ShaoyiShaoActivity extends Activity {
             if (success) {
 
                 fillGoodsInfoForm(goodsInfo);
-                // for test
-                data=new ArrayList<Map<String,String>>();
-                for(int i=0;i<10;i++) {
-                    Map<String, String> map = new HashMap<>();
-                    map.put("shopName", "武昌量贩"+i);
-                    map.put("goodsNmae", "鸡蛋");
-                    map.put("price", "0.5");
-                    map.put("unit", "个");
-                    map.put("distance", "300");
-                    data.add(map);
-                }
-                SuggessAdapter adapter=new SuggessAdapter(ShaoyiShaoActivity.this,data);
-                listView.setAdapter(adapter);
 
+                SmilarGoodsTask smt=new SmilarGoodsTask("白萝卜","1");
+                smt.execute();
 
             }else {
                 if(resultCode==4)

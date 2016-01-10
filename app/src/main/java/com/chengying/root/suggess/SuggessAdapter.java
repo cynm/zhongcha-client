@@ -92,7 +92,7 @@ public class SuggessAdapter extends BaseAdapter {
         tvDistance = (TextView) convertView.findViewById(R.id.distance);
 
         tvShopName.setText(data.get(position).get("shopName"));
-        tvGoodsName.setText(data.get(position).get("goodsNmae"));
+        tvGoodsName.setText(data.get(position).get("goodsName"));
         tvPrice.setText(data.get(position).get("price"));
         tvUnit.setText(data.get(position).get("unit"));
         tvDistance.setText(data.get(position).get("distance"));
