@@ -20,7 +20,7 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="myBlueTheme" parent="@style/Theme.AppCompat.Light.NoActionBar" >
+    <style name="myBlueTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorForeground">@color/foreground_material_light</item>
     </style>
 
@@ -33,6 +33,7 @@
         <item name="android:windowTitleSize">50dp</item>
         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
     </style>
+
     <style name="TitleStyleCenter">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_height">wrap_content</item>

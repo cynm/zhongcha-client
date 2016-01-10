@@ -276,6 +276,16 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
 
     }
 
+    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(RegistActivity.this,
+                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+
+        mEmailView.setAdapter(adapter);
+    }
+
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -286,16 +296,6 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
         int IS_PRIMARY = 1;
     }
 
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(RegistActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -304,44 +304,41 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
 
         private final String mPhone;
         private final String mPassword;
-
+        int resultCode = 0;
+        Map<String, String> usermap;
         UserLoginTask(String email, String password) {
             mPhone = email;
             mPassword = password;
         }
-        int resultCode=0;
-        Map<String,String>usermap;
+
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            Map<String,String> map=new HashMap<String,String>();
-            map.put("id",mPhone);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("id", mPhone);
             map.put("password", mPassword);
-            String resultStr =  MySocketClient.getInstance().send(AppConfig.regiUrl, map);
-            if(resultStr==null){
-                resultCode=4;//net work error
+            String resultStr = MySocketClient.getInstance().send(AppConfig.regiUrl, map);
+            if (resultStr == null) {
+                resultCode = 4;//net work error
                 return false;
             }
-            usermap= Tools.JArrayToMap(resultStr);
-            if(usermap.get("result").equals("true")){
+            usermap = Tools.JArrayToMap(resultStr);
+            if (usermap.get("result").equals("true")) {
                 //reg ok
-                AppConfig.userMap=usermap;// write to Appconfig
-                resultCode=0;
+                AppConfig.userMap = usermap;// write to Appconfig
+                resultCode = 0;
                 return false;
-            }
-            else if(usermap.get("result").equals("false")){
-                if(usermap.get("resultCode").equals("1")){
+            } else if (usermap.get("result").equals("false")) {
+                if (usermap.get("resultCode").equals("1")) {
                     // user is  exist
-                    resultCode=1;
+                    resultCode = 1;
                     return false;
 
                 }
 
 
             }
-
-
 
 
             for (String credential : DUMMY_CREDENTIALS) {
@@ -364,19 +361,18 @@ public class RegistActivity extends Activity implements LoaderCallbacks<Cursor> 
             if (success) {
                 finish();
             } else {
-                if(resultCode==4)//network error
+                if (resultCode == 4)//network error
                 {
                     Toast.makeText(RegistActivity.this, MySocketClient.STATE_TIME_OUT, Toast.LENGTH_SHORT).show();
 
-                } else if(resultCode==1){
+                } else if (resultCode == 1) {
                     //user is exist
                     mEmailView.setError(usermap.get("info"));
                     mEmailView.requestFocus();
 
-                }else
-                if(resultCode==0){
+                } else if (resultCode == 0) {
                     //ok
-                    Toast.makeText(RegistActivity.this,usermap.get("info"),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistActivity.this, usermap.get("info"), Toast.LENGTH_SHORT).show();
                     RegistActivity.this.finish();
                 }
             }

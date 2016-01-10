@@ -1,122 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/item_selecter"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
     android:layout_marginBottom="2dp"
-    android:layout_width="fill_parent" android:layout_height="100dp">
+    android:background="@drawable/item_selecter">
+
     <ImageView
-        android:layout_marginLeft="15dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
+        android:id="@+id/near_item"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/near_item"
-        android:src="@mipmap/example"
-    />
-    <LinearLayout
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:gravity="center|left"
-        android:layout_toRightOf="@id/near_item"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/example" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="50dp"
-        android:orientation="vertical"
-        >
-    <LinearLayout
-        android:id="@+id/layout_1"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_toRightOf="@id/near_item"
+        android:gravity="center|left"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/shop_name"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="武商量贩"
-        />
-        </LinearLayout>
         <LinearLayout
-            android:layout_height="wrap_content"
+            android:id="@+id/layout_1"
             android:layout_width="wrap_content"
-            >
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="武商量贩" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
             <TextView
 
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="商品名称:"
-                />
-    <TextView
-        android:id="@+id/goods_name"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="白菜"
-        />
-            </LinearLayout>
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            >
-    <TextView
+                android:layout_height="wrap_content"
+                android:text="商品名称:" />
 
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="单价:"
-        />
-    <TextView
-        android:id="@+id/price"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="0"
-        />
-    <TextView
-
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="元/"
-        />
-
-    <TextView
-
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="斤"
-        android:id="@+id/unit" />
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="白菜" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            >
-    <TextView
+            android:layout_height="wrap_content">
 
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="距离"
-        />
-    <TextView
-        android:id="@+id/distance"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="50"
-        />
-    <TextView
+            <TextView
 
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="米"
-        />
-            </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="单价:" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元/" />
+
+            <TextView
+
+                android:id="@+id/unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="斤" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="距离" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米" />
+        </LinearLayout>
+    </LinearLayout>
+
     <ImageView
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-       android:layout_marginRight="15dp"
-
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
 
         android:layout_gravity="right"
-        android:src="@mipmap/vm"
-        />
+
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/vm" />
 
 </RelativeLayout>

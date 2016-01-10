@@ -14,7 +14,10 @@ import com.chengying.root.homePage.HomeActivity;
 import com.chengying.root.myPage.MyActivity;
 import com.chengying.root.shaoyishaoPage.ShaoyiShaoActivity;
 
-public class FullscreenActivity extends TabActivity implements   View.OnClickListener {
+public class FullscreenActivity extends TabActivity implements View.OnClickListener {
+    public static String TAB_HOME = "home";
+    public static String TAB_SHAOYISHAO = "shaoyishao";
+    public static String TAB_MY = "my";
     LinearLayout m_home;
     LinearLayout m_shaoyishao;
     LinearLayout m_my;
@@ -22,17 +25,15 @@ public class FullscreenActivity extends TabActivity implements   View.OnClickLis
     ImageView m_s;
     ImageView m_m;
     TabHost tabHost;
-    public static String TAB_HOME="home";
-    public static String TAB_SHAOYISHAO="shaoyishao";
-    public static String TAB_MY="my";
-    private void initView(){
-        m_home= (LinearLayout) this.findViewById(R.id.home);
-        m_shaoyishao=(LinearLayout)this.findViewById(R.id.shaoyishao);
-        m_my=(LinearLayout)this.findViewById(R.id.my);
-        m_h= (ImageView) this.findViewById(R.id.m_h);
-        m_s= (ImageView) this.findViewById(R.id.m_s);
-        m_m= (ImageView) this.findViewById(R.id.m_m);
-        tabHost=this.getTabHost();
+
+    private void initView() {
+        m_home = (LinearLayout) this.findViewById(R.id.home);
+        m_shaoyishao = (LinearLayout) this.findViewById(R.id.shaoyishao);
+        m_my = (LinearLayout) this.findViewById(R.id.my);
+        m_h = (ImageView) this.findViewById(R.id.m_h);
+        m_s = (ImageView) this.findViewById(R.id.m_s);
+        m_m = (ImageView) this.findViewById(R.id.m_m);
+        tabHost = this.getTabHost();
 
         m_h.setOnClickListener(this);
         m_home.setOnClickListener(this);
@@ -42,9 +43,9 @@ public class FullscreenActivity extends TabActivity implements   View.OnClickLis
         m_my.setOnClickListener(this);
 
 
-         TabSpec tabspac_home=tabHost.newTabSpec(TAB_HOME).setIndicator(TAB_HOME);
-         TabSpec tabspac_shaoyishao=tabHost.newTabSpec(TAB_SHAOYISHAO).setIndicator(TAB_SHAOYISHAO);
-         TabSpec tabspac_my=tabHost.newTabSpec(TAB_MY).setIndicator(TAB_MY);
+        TabSpec tabspac_home = tabHost.newTabSpec(TAB_HOME).setIndicator(TAB_HOME);
+        TabSpec tabspac_shaoyishao = tabHost.newTabSpec(TAB_SHAOYISHAO).setIndicator(TAB_SHAOYISHAO);
+        TabSpec tabspac_my = tabHost.newTabSpec(TAB_MY).setIndicator(TAB_MY);
 
         tabspac_home.setContent(new Intent(this, HomeActivity.class));
         tabspac_shaoyishao.setContent(new Intent(this, ShaoyiShaoActivity.class));
@@ -53,12 +54,12 @@ public class FullscreenActivity extends TabActivity implements   View.OnClickLis
         tabHost.addTab(tabspac_home);
         tabHost.addTab(tabspac_shaoyishao);
         tabHost.addTab(tabspac_my);
-tabHost.setCurrentTabByTag(TAB_HOME);
+        tabHost.setCurrentTabByTag(TAB_HOME);
         tabHost.setup();
 
 
-
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +72,14 @@ tabHost.setCurrentTabByTag(TAB_HOME);
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.home:
             case R.id.m_h:
-                Toast.makeText(this,"home",Toast.LENGTH_LONG).show();
-                tabHost.setCurrentTabByTag(TAB_HOME);;
-            break;
+                Toast.makeText(this, "home", Toast.LENGTH_LONG).show();
+                tabHost.setCurrentTabByTag(TAB_HOME);
+                ;
+                break;
             case R.id.shaoyishao:
 
             case R.id.m_s:
@@ -87,7 +89,7 @@ tabHost.setCurrentTabByTag(TAB_HOME);
                 break;
             case R.id.my:
             case R.id.m_m:
-                Toast.makeText(this,"my",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "my", Toast.LENGTH_LONG).show();
                 tabHost.setCurrentTabByTag(TAB_MY);
                 break;
 

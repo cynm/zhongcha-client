@@ -1,119 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.chengying.root.shaoyishaoPage.ShaoyiShaoActivity">
-    <Button android:id="@+id/button1" style="?android:textAppearanceSmall"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" android:text="扫一扫"
+
+    <Button
+        android:id="@+id/button1"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="扫一扫"
         android:textStyle="bold" />
+
     <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button1"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
-        android:layout_below="@id/button1"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" android:visibility="gone" />
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/goods_form_view"
-        android:layout_below="@id/button1"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent">
-    <LinearLayout
-        android:id="@+id/goods_info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/button1"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/goods_image"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/example"
-            />
         <LinearLayout
-            android:id="@+id/goods_info0"
+            android:id="@+id/goods_info"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/t0_name"
-                android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/goods_image"
                 android:layout_width="wrap_content"
-                android:text="商品名:"
-                />
-            <TextView
-                android:id="@+id/v0_name"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="XXXXXX"
-                />
+                android:layout_gravity="center"
+                android:src="@mipmap/example" />
+
+            <LinearLayout
+                android:id="@+id/goods_info0"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t0_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商品名:" />
+
+                <TextView
+                    android:id="@+id/v0_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXX" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/goods_info1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="价    格:" />
+
+                <TextView
+                    android:id="@+id/v1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXX" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更新时间" />
+
+                <TextView
+                    android:id="@+id/update_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="today" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/goods_info1"
+            android:id="@+id/knowmore_tips"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/t1_name"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="价    格:"
-                />
-            <TextView
-                android:id="@+id/v1_name"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="XXXXXX"
-                />
-            <TextView
+            android:layout_below="@id/goods_info">
 
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="元"
-                />
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近价格" />
+        </LinearLayout>
 
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="更新时间"
-                />
-            <TextView
-                android:id="@+id/update_time"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="today"
-                />
-        </LinearLayout>
-        </LinearLayout>
-    <LinearLayout
-        android:id="@+id/knowmore_tips"
-        android:layout_below="@id/goods_info"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="附近价格"
-            />
+        <ListView
+
+            android:id="@+id/thesuggesstion"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/knowmore_tips"
+
+            android:layout_marginBottom="45dp">
+
+        </ListView>
     </LinearLayout>
-    <ListView
-
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/knowmore_tips"
-        android:layout_marginBottom="45dp"
-
-        android:id="@+id/thesuggesstion"
-        >
-
-    </ListView>
-</LinearLayout>
 </RelativeLayout>

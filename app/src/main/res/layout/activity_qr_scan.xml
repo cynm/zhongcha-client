@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/capture_containter"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <SurfaceView
         android:id="@+id/capture_preview"
@@ -12,21 +12,21 @@
         tools:ignore="RtlCompat" />
 
     <include
-        layout="@layout/titlebar_qr_scan"
         android:id="@+id/title"
-        android:layout_alignParentTop="true"
+        layout="@layout/titlebar_qr_scan"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10px"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10px" />
 
     <ImageView
         android:id="@+id/top_mask"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:onClick="onBack"
+        android:layout_below="@+id/title"
         android:background="@mipmap/scan_mask"
         android:contentDescription="@string/app_name"
-        android:layout_below="@+id/title" />
+        android:onClick="onBack" />
 
     <RelativeLayout
         android:id="@+id/capture_crop_layout"
@@ -35,7 +35,7 @@
         android:layout_below="@id/top_mask"
         android:layout_centerHorizontal="true"
         android:background="@mipmap/scan_capture"
-        android:contentDescription="@string/app_name" >
+        android:contentDescription="@string/app_name">
 
         <ImageView
             android:id="@+id/capture_scan_line"

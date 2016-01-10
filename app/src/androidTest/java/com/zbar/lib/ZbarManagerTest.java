@@ -13,7 +13,7 @@ public class ZbarManagerTest extends TestCase {
 
     public void testDecode() throws Exception {
 
-        ZbarManager zb=new ZbarManager();
-       System.out.print( zb.decode(new byte[]{1,2},2,3,true,4,2,3,4));
+        ZbarManager zb = new ZbarManager();
+        System.out.print(zb.decode(new byte[]{1, 2}, 2, 3, true, 4, 2, 3, 4));
     }
 }

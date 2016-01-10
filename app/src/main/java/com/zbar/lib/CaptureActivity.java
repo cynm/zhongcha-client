@@ -1,7 +1,5 @@
 package com.zbar.lib;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Point;
@@ -21,247 +19,243 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.chengying.root.zhongcha.R;
 import com.zbar.lib.camera.CameraManager;
 import com.zbar.lib.decode.CaptureActivityHandler;
 import com.zbar.lib.decode.InactivityTimer;
-import com.chengying.root.zhongcha.R;
+
+import java.io.IOException;
 
 
 public class CaptureActivity extends Activity implements Callback {
 
-	private CaptureActivityHandler handler;
-	private boolean hasSurface;
-	private InactivityTimer inactivityTimer;
-	private MediaPlayer mediaPlayer;
-	private boolean playBeep;
-	private static final float BEEP_VOLUME = 0.50f;
-	private boolean vibrate;
-	private int x = 0;
-	private int y = 0;
-	private int cropWidth = 0;
-	private int cropHeight = 0;
-	private RelativeLayout mContainer = null;
-	private RelativeLayout mCropLayout = null;
-	private boolean isNeedCapture = false;
+    private static final float BEEP_VOLUME = 0.50f;
+    private static final long VIBRATE_DURATION = 200L;
+    private final OnCompletionListener beepListener = new OnCompletionListener() {
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            mediaPlayer.seekTo(0);
+        }
+    };
+    boolean flag = true;
+    private CaptureActivityHandler handler;
+    private boolean hasSurface;
+    private InactivityTimer inactivityTimer;
+    private MediaPlayer mediaPlayer;
+    private boolean playBeep;
+    private boolean vibrate;
+    private int x = 0;
+    private int y = 0;
+    private int cropWidth = 0;
+    private int cropHeight = 0;
+    private RelativeLayout mContainer = null;
+    private RelativeLayout mCropLayout = null;
+    private boolean isNeedCapture = false;
 
-	public boolean isNeedCapture() {
-		return isNeedCapture;
-	}
+    public boolean isNeedCapture() {
+        return isNeedCapture;
+    }
 
-	public void setNeedCapture(boolean isNeedCapture) {
-		this.isNeedCapture = isNeedCapture;
-	}
+    public void setNeedCapture(boolean isNeedCapture) {
+        this.isNeedCapture = isNeedCapture;
+    }
 
-	public int getX() {
-		return x;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+    public void setY(int y) {
+        this.y = y;
+    }
 
-	public int getCropWidth() {
-		return cropWidth;
-	}
+    public int getCropWidth() {
+        return cropWidth;
+    }
 
-	public void setCropWidth(int cropWidth) {
-		this.cropWidth = cropWidth;
-	}
+    public void setCropWidth(int cropWidth) {
+        this.cropWidth = cropWidth;
+    }
 
-	public int getCropHeight() {
-		return cropHeight;
-	}
+    public int getCropHeight() {
+        return cropHeight;
+    }
 
-	public void setCropHeight(int cropHeight) {
-		this.cropHeight = cropHeight;
-	}
+    public void setCropHeight(int cropHeight) {
+        this.cropHeight = cropHeight;
+    }
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_qr_scan);
+        setContentView(R.layout.activity_qr_scan);
 
-		CameraManager.init(getApplication());
-		hasSurface = false;
-		inactivityTimer = new InactivityTimer(this);
+        CameraManager.init(getApplication());
+        hasSurface = false;
+        inactivityTimer = new InactivityTimer(this);
 
-		mContainer = (RelativeLayout) findViewById(R.id.capture_containter);
-		mCropLayout = (RelativeLayout) findViewById(R.id.capture_crop_layout);
+        mContainer = (RelativeLayout) findViewById(R.id.capture_containter);
+        mCropLayout = (RelativeLayout) findViewById(R.id.capture_crop_layout);
 
-		ImageView mQrLineView = (ImageView) findViewById(R.id.capture_scan_line);
-		TranslateAnimation mAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f,
-				TranslateAnimation.RELATIVE_TO_PARENT, 0f, TranslateAnimation.RELATIVE_TO_PARENT, 0.9f);
-		mAnimation.setDuration(1500);
-		mAnimation.setRepeatCount(-1);
-		mAnimation.setRepeatMode(Animation.REVERSE);
-		mAnimation.setInterpolator(new LinearInterpolator());
-		mQrLineView.setAnimation(mAnimation);
-	}
+        ImageView mQrLineView = (ImageView) findViewById(R.id.capture_scan_line);
+        TranslateAnimation mAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f, TranslateAnimation.RELATIVE_TO_PARENT, 0.9f);
+        mAnimation.setDuration(1500);
+        mAnimation.setRepeatCount(-1);
+        mAnimation.setRepeatMode(Animation.REVERSE);
+        mAnimation.setInterpolator(new LinearInterpolator());
+        mQrLineView.setAnimation(mAnimation);
+    }
 
-	boolean flag = true;
+    protected void light() {
+        if (flag == true) {
+            flag = false;
 
-	protected void light() {
-		if (flag == true) {
-			flag = false;
-			 
-			CameraManager.get().openLight();
-		} else {
-			flag = true;
-			 
-			CameraManager.get().offLight();
-		}
+            CameraManager.get().openLight();
+        } else {
+            flag = true;
 
-	}
+            CameraManager.get().offLight();
+        }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void onResume() {
-		super.onResume();
-		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.capture_preview);
-		SurfaceHolder surfaceHolder = surfaceView.getHolder();
-		if (hasSurface) {
-			initCamera(surfaceHolder);
-		} else {
-			surfaceHolder.addCallback(this);
-			surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		}
-		playBeep = true;
-		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
-		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
-			playBeep = false;
-		}
-		initBeepSound();
-		vibrate = true;
-	}
+    }
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (handler != null) {
-			handler.quitSynchronously();
-			handler = null;
-		}
-		CameraManager.get().closeDriver();
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.capture_preview);
+        SurfaceHolder surfaceHolder = surfaceView.getHolder();
+        if (hasSurface) {
+            initCamera(surfaceHolder);
+        } else {
+            surfaceHolder.addCallback(this);
+            surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        }
+        playBeep = true;
+        AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
+        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+            playBeep = false;
+        }
+        initBeepSound();
+        vibrate = true;
+    }
 
-	@Override
-	protected void onDestroy() {
-		inactivityTimer.shutdown();
-		super.onDestroy();
-	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (handler != null) {
+            handler.quitSynchronously();
+            handler = null;
+        }
+        CameraManager.get().closeDriver();
+    }
 
-	public void handleDecode(String result) {
-		inactivityTimer.onActivity();
-		playBeepSoundAndVibrate();
+    @Override
+    protected void onDestroy() {
+        inactivityTimer.shutdown();
+        super.onDestroy();
+    }
 
-		Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+    public void handleDecode(String result) {
+        inactivityTimer.onActivity();
+        playBeepSoundAndVibrate();
 
-
-	}
-
-	private void initCamera(SurfaceHolder surfaceHolder) {
-		try {
-			CameraManager.get().openDriver(surfaceHolder);
-
-			Point point = CameraManager.get().getCameraResolution();
-			int width = point.y;
-			int height = point.x;
-
-			int x = mCropLayout.getLeft() * width / mContainer.getWidth();
-			int y = mCropLayout.getTop() * height / mContainer.getHeight();
-
-			int cropWidth = mCropLayout.getWidth() * width / mContainer.getWidth();
-			int cropHeight = mCropLayout.getHeight() * height / mContainer.getHeight();
-
-			setX(x);
-			setY(y);
-			setCropWidth(cropWidth);
-			setCropHeight(cropHeight);
-			 
-			setNeedCapture(true);
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
 
-		} catch (IOException ioe) {
-			return;
-		} catch (RuntimeException e) {
-			return;
-		}
-		if (handler == null) {
-			handler = new CaptureActivityHandler(CaptureActivity.this);
-		}
-	}
+    }
 
-	 
+    private void initCamera(SurfaceHolder surfaceHolder) {
+        try {
+            CameraManager.get().openDriver(surfaceHolder);
 
- 
-	 
+            Point point = CameraManager.get().getCameraResolution();
+            int width = point.y;
+            int height = point.x;
 
-	public Handler getHandler() {
-		return handler;
-	}
+            int x = mCropLayout.getLeft() * width / mContainer.getWidth();
+            int y = mCropLayout.getTop() * height / mContainer.getHeight();
 
-	private void initBeepSound() {
-		if (playBeep && mediaPlayer == null) {
-			setVolumeControlStream(AudioManager.STREAM_MUSIC);
-			mediaPlayer = new MediaPlayer();
-			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-			mediaPlayer.setOnCompletionListener(beepListener);
+            int cropWidth = mCropLayout.getWidth() * width / mContainer.getWidth();
+            int cropHeight = mCropLayout.getHeight() * height / mContainer.getHeight();
 
-			AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
-			try {
-				mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-				file.close();
-				mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
-				mediaPlayer.prepare();
-			} catch (IOException e) {
-				mediaPlayer = null;
-			}
-		}
-	}
+            setX(x);
+            setY(y);
+            setCropWidth(cropWidth);
+            setCropHeight(cropHeight);
 
-	private static final long VIBRATE_DURATION = 200L;
+            setNeedCapture(true);
 
-	private void playBeepSoundAndVibrate() {
-		if (playBeep && mediaPlayer != null) {
-			mediaPlayer.start();
-		}
-		if (vibrate) {
-			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-			vibrator.vibrate(VIBRATE_DURATION);
-		}
-	}
 
-	private final OnCompletionListener beepListener = new OnCompletionListener() {
-		public void onCompletion(MediaPlayer mediaPlayer) {
-			mediaPlayer.seekTo(0);
-		}
-	};
+        } catch (IOException ioe) {
+            return;
+        } catch (RuntimeException e) {
+            return;
+        }
+        if (handler == null) {
+            handler = new CaptureActivityHandler(CaptureActivity.this);
+        }
+    }
 
-	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
+    public Handler getHandler() {
+        return handler;
+    }
 
-	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		if (!hasSurface) {
-			hasSurface = true;
-			initCamera(holder);
-		}
-	}
+    private void initBeepSound() {
+        if (playBeep && mediaPlayer == null) {
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnCompletionListener(beepListener);
 
-	public void surfaceDestroyed(SurfaceHolder arg0) {
-		// TODO Auto-generated method stub
-		hasSurface = false;
-	}
+            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
+            try {
+                mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+                file.close();
+                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                mediaPlayer = null;
+            }
+        }
+    }
+
+    private void playBeepSoundAndVibrate() {
+        if (playBeep && mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+        if (vibrate) {
+            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(VIBRATE_DURATION);
+        }
+    }
+
+    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void surfaceCreated(SurfaceHolder holder) {
+        // TODO Auto-generated method stub
+        if (!hasSurface) {
+            hasSurface = true;
+            initCamera(holder);
+        }
+    }
+
+    public void surfaceDestroyed(SurfaceHolder arg0) {
+        // TODO Auto-generated method stub
+        hasSurface = false;
+    }
 }
