@@ -1,0 +1,256 @@
+<html>
+<head>
+<title>ShaoyiShaoActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+.s5 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+.s6 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ShaoyiShaoActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.chengying.root.shaoyishaoPage; 
+ 
+</span><span class="s0">import </span><span class="s1">android.animation.Animator; 
+</span><span class="s0">import </span><span class="s1">android.animation.AnimatorListenerAdapter; 
+</span><span class="s0">import </span><span class="s1">android.annotation.TargetApi; 
+</span><span class="s0">import </span><span class="s1">android.app.Activity; 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask; 
+</span><span class="s0">import </span><span class="s1">android.os.Build; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.ImageView; 
+</span><span class="s0">import </span><span class="s1">android.widget.LinearLayout; 
+</span><span class="s0">import </span><span class="s1">android.widget.ListView; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import </span><span class="s1">com.chengying.root.network.MySocketClient; 
+</span><span class="s0">import </span><span class="s1">com.chengying.root.suggess.SuggessAdapter; 
+</span><span class="s0">import </span><span class="s1">com.chengying.root.tools.ImageShowTask; 
+</span><span class="s0">import </span><span class="s1">com.chengying.root.tools.Tools; 
+</span><span class="s0">import </span><span class="s1">com.chengying.root.zhongcha.R; 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray; 
+</span><span class="s0">import </span><span class="s1">org.json.JSONException; 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject; 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.HashMap; 
+</span><span class="s0">import </span><span class="s1">java.util.List; 
+</span><span class="s0">import </span><span class="s1">java.util.Map; 
+ 
+</span><span class="s0">public class </span><span class="s1">ShaoyiShaoActivity </span><span class="s0">extends </span><span class="s1">Activity { 
+    </span><span class="s0">public </span><span class="s1">View goodsFormView; 
+    </span><span class="s0">public </span><span class="s1">View mProgressView; 
+    </span><span class="s0">public </span><span class="s1">TextView tvGoodsName; 
+    </span><span class="s0">public </span><span class="s1">TextView tvGoodsPrice; 
+    </span><span class="s0">public </span><span class="s1">TextView tvUpdateTime; 
+    </span><span class="s0">public </span><span class="s1">ListView listView; 
+    </span><span class="s0">public </span><span class="s1">ImageView imageView; 
+ 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2) 
+    </span><span class="s0">private void </span><span class="s1">showProgress(</span><span class="s0">final boolean </span><span class="s1">show) { 
+        </span><span class="s2">// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow</span><span class="s1"> 
+        </span><span class="s2">// for very easy animations. If available, use these APIs to fade-in</span><span class="s1"> 
+        </span><span class="s2">// the progress spinner.</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB_MR2) { 
+            </span><span class="s0">int </span><span class="s1">shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime); 
+ 
+            goodsFormView.setVisibility(show ? View.GONE : View.VISIBLE); 
+            goodsFormView.animate().setDuration(shortAnimTime).alpha( 
+                    show ? </span><span class="s3">0 </span><span class="s1">: </span><span class="s3">1</span><span class="s1">).setListener(</span><span class="s0">new </span><span class="s1">AnimatorListenerAdapter() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onAnimationEnd(Animator animation) { 
+                    goodsFormView.setVisibility(show ? View.GONE : View.VISIBLE); 
+                } 
+            }); 
+ 
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE); 
+            mProgressView.animate().setDuration(shortAnimTime).alpha( 
+                    show ? </span><span class="s3">1 </span><span class="s1">: </span><span class="s3">0</span><span class="s1">).setListener(</span><span class="s0">new </span><span class="s1">AnimatorListenerAdapter() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onAnimationEnd(Animator animation) { 
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE); 
+                } 
+            }); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s2">// The ViewPropertyAnimator APIs are not available, so simply show</span><span class="s1"> 
+            </span><span class="s2">// and hide the relevant UI components.</span><span class="s1"> 
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE); 
+            goodsFormView.setVisibility(show ? View.GONE : View.VISIBLE); 
+        } 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_shaoyi_shao); 
+        goodsFormView = (LinearLayout) </span><span class="s0">this</span><span class="s1">.findViewById(R.id.goods_form_view); 
+        mProgressView = findViewById(R.id.login_progress); 
+        tvGoodsName = (TextView) </span><span class="s0">this</span><span class="s1">.findViewById(R.id.v0_name); 
+        tvGoodsPrice = (TextView) </span><span class="s0">this</span><span class="s1">.findViewById(R.id.v1_name); 
+        tvUpdateTime = (TextView) </span><span class="s0">this</span><span class="s1">.findViewById(R.id.update_time); 
+        listView = (ListView) </span><span class="s0">this</span><span class="s1">.findViewById(R.id.thesuggesstion); 
+        imageView = (ImageView) </span><span class="s0">this</span><span class="s1">.findViewById(R.id.goods_image); 
+        </span><span class="s0">this</span><span class="s1">.findViewById(R.id.button1).setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s2">//startActivity(new Intent(ShaoyiShaoActivity.this, CaptureActivity.class));</span><span class="s1"> 
+                showProgress(</span><span class="s0">true</span><span class="s1">); 
+                GoodsGetTask mAuthTask = </span><span class="s0">new </span><span class="s1">GoodsGetTask(</span><span class="s4">&quot;dsd222&quot;</span><span class="s1">); 
+                mAuthTask.execute((Void) </span><span class="s0">null</span><span class="s1">); 
+            } 
+        }); 
+ 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">fillGoodsInfoForm(Map&lt;String, String&gt; map) { 
+        tvGoodsName.setText(map.get(</span><span class="s4">&quot;goodsname&quot;</span><span class="s1">)); 
+        tvGoodsPrice.setText(map.get(</span><span class="s4">&quot;price&quot;</span><span class="s1">)); 
+        tvUpdateTime.setText(map.get(</span><span class="s4">&quot;last_rfeash_time&quot;</span><span class="s1">)); 
+        ImageShowTask task = </span><span class="s0">new </span><span class="s1">ImageShowTask(</span><span class="s0">this</span><span class="s1">, imageView, map.get(</span><span class="s4">&quot;image&quot;</span><span class="s1">)); 
+        task.execute(); 
+    } 
+ 
+    </span><span class="s0">public class </span><span class="s1">SmilarGoodsTask </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;Void, Void, Boolean&gt; { 
+        String goodsName; 
+        String currentShopID; 
+        </span><span class="s2">/** 
+         * Override this method to perform a computation on a background thread. The 
+         * specified parameters are the parameters passed to {</span><span class="s5">@link </span><span class="s2">#execute} 
+         * by the caller of this task. 
+         * </span><span class="s6">&lt;p/&gt;</span><span class="s2"> 
+         * This method can call {</span><span class="s5">@link </span><span class="s2">#publishProgress} to publish updates 
+         * on the UI thread. 
+         * 
+         * </span><span class="s5">@param </span><span class="s2">params The parameters of the task. 
+         * </span><span class="s5">@return </span><span class="s2">A result, defined by the subclass of this task. 
+         * </span><span class="s5">@see </span><span class="s2">#onPreExecute() 
+         * </span><span class="s5">@see </span><span class="s2">#onPostExecute 
+         * </span><span class="s5">@see </span><span class="s2">#publishProgress 
+         */</span><span class="s1"> 
+        List&lt;Map&lt;String, String&gt;&gt; data = </span><span class="s0">null</span><span class="s1">; 
+ 
+        </span><span class="s0">public </span><span class="s1">SmilarGoodsTask(String goodsName, String currentShopID) { 
+            </span><span class="s0">this</span><span class="s1">.goodsName = goodsName; 
+            </span><span class="s0">this</span><span class="s1">.currentShopID = currentShopID; 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">Boolean doInBackground(Void... params) { 
+            Map&lt;String, String&gt; map0 = </span><span class="s0">new </span><span class="s1">HashMap&lt;String, String&gt;(); 
+ 
+            map0.put(</span><span class="s4">&quot;goodsName&quot;</span><span class="s1">, goodsName); 
+            map0.put(</span><span class="s4">&quot;currentShopID&quot;</span><span class="s1">, currentShopID); 
+            String resultStr = MySocketClient.getInstance().send(</span><span class="s4">&quot;GetSimiarGoodsInNearShopProcesser&quot;</span><span class="s1">, map0); 
+            </span><span class="s0">if </span><span class="s1">(resultStr == </span><span class="s0">null</span><span class="s1">) { 
+ 
+                </span><span class="s0">return false</span><span class="s1">; 
+            } 
+            data = Tools.JArrayToMaps(resultStr); 
+</span><span class="s2">//            Map&lt;String,String&gt; map=new HashMap&lt;String,String&gt;();</span><span class="s1"> 
+</span><span class="s2">//            map.put(&quot;goodsID&quot;,i+&quot;&quot;);</span><span class="s1"> 
+</span><span class="s2">//            map.put(&quot;shopName&quot;, &quot;武昌量贩&quot;+i);</span><span class="s1"> 
+</span><span class="s2">//            map.put(&quot;goodsName&quot;, &quot;鸡蛋&quot;);</span><span class="s1"> 
+</span><span class="s2">//            map.put(&quot;price&quot;, &quot;0.5&quot;);</span><span class="s1"> 
+</span><span class="s2">//            map.put(&quot;unit&quot;, &quot;个&quot;);</span><span class="s1"> 
+</span><span class="s2">//            map.put(&quot;distance&quot;, &quot;300&quot;);</span><span class="s1"> 
+</span><span class="s2">//            data.add(map);</span><span class="s1"> 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(Boolean success) { 
+            </span><span class="s0">if </span><span class="s1">(success) { 
+                SuggessAdapter adapter = </span><span class="s0">new </span><span class="s1">SuggessAdapter(ShaoyiShaoActivity.</span><span class="s0">this</span><span class="s1">, data); 
+                listView.setAdapter(adapter); 
+ 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                Toast.makeText(ShaoyiShaoActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s4">&quot;error&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s0">public class </span><span class="s1">GoodsGetTask </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;Void, Void, Boolean&gt; { 
+        </span><span class="s0">public int </span><span class="s1">resultCode = </span><span class="s3">0</span><span class="s1">; 
+        Map&lt;String, String&gt; resultMap = </span><span class="s0">null</span><span class="s1">; 
+        Map&lt;String, String&gt; goodsInfo = </span><span class="s0">null</span><span class="s1">; 
+ 
+        String ecode; 
+ 
+        </span><span class="s0">public </span><span class="s1">GoodsGetTask(String ecode) { 
+            </span><span class="s0">this</span><span class="s1">.ecode = ecode; 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">Boolean doInBackground(Void... params) { 
+            JSONArray ja = </span><span class="s0">new </span><span class="s1">JSONArray(); 
+            JSONObject jo = </span><span class="s0">new </span><span class="s1">JSONObject(); 
+            </span><span class="s0">try </span><span class="s1">{ 
+                jo.put(</span><span class="s4">&quot;goods_ecode&quot;</span><span class="s1">, ecode); 
+            } </span><span class="s0">catch </span><span class="s1">(JSONException e) { 
+                e.printStackTrace(); 
+            } 
+            ja.put(jo); 
+            String resultStr = MySocketClient.getInstance().send(</span><span class="s4">&quot;GetGoodsInfoProcesser&quot;</span><span class="s1">, ja); 
+            </span><span class="s0">if </span><span class="s1">(resultStr == </span><span class="s0">null</span><span class="s1">) { 
+                resultCode = </span><span class="s3">4</span><span class="s1">;</span><span class="s2">//net work error</span><span class="s1"> 
+                </span><span class="s0">return false</span><span class="s1">; 
+            } 
+            resultMap = Tools.JArrayToMap(resultStr, </span><span class="s3">0</span><span class="s1">); 
+            goodsInfo = Tools.JArrayToMap(resultStr, </span><span class="s3">1</span><span class="s1">); 
+            </span><span class="s0">if </span><span class="s1">(resultMap.get(</span><span class="s4">&quot;result&quot;</span><span class="s1">).equals(</span><span class="s4">&quot;true&quot;</span><span class="s1">)) { 
+                </span><span class="s2">//  ok</span><span class="s1"> 
+ 
+                resultCode = </span><span class="s3">0</span><span class="s1">; 
+                </span><span class="s0">return true</span><span class="s1">; 
+            } </span><span class="s0">else if </span><span class="s1">(resultMap.get(</span><span class="s4">&quot;result&quot;</span><span class="s1">).equals(</span><span class="s4">&quot;false&quot;</span><span class="s1">)) { 
+                </span><span class="s0">if </span><span class="s1">(resultMap.get(</span><span class="s4">&quot;resultCode&quot;</span><span class="s1">).equals(</span><span class="s4">&quot;1&quot;</span><span class="s1">)) { 
+                    </span><span class="s2">// goods is not exist</span><span class="s1"> 
+                    resultCode = </span><span class="s3">1</span><span class="s1">; 
+                    </span><span class="s0">return false</span><span class="s1">; 
+ 
+                } 
+ 
+ 
+            } 
+            </span><span class="s0">return false</span><span class="s1">; 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(</span><span class="s0">final </span><span class="s1">Boolean success) { 
+            showProgress(</span><span class="s0">false</span><span class="s1">); 
+            </span><span class="s0">if </span><span class="s1">(success) { 
+ 
+                fillGoodsInfoForm(goodsInfo); 
+ 
+                SmilarGoodsTask smt = </span><span class="s0">new </span><span class="s1">SmilarGoodsTask(</span><span class="s4">&quot;白萝卜&quot;</span><span class="s1">, </span><span class="s4">&quot;1&quot;</span><span class="s1">); 
+                smt.execute(); 
+ 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s0">if </span><span class="s1">(resultCode == </span><span class="s3">4</span><span class="s1">) { 
+                    Toast.makeText(ShaoyiShaoActivity.</span><span class="s0">this</span><span class="s1">, MySocketClient.STATE_TIME_OUT, Toast.LENGTH_SHORT).show(); 
+ 
+                } </span><span class="s0">else if </span><span class="s1">(resultCode == </span><span class="s3">1</span><span class="s1">) { 
+ 
+                    Toast.makeText(ShaoyiShaoActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s4">&quot;not exist&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                } 
+            } 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>

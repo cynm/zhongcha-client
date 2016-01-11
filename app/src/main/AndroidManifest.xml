@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chengying.root.zhongcha">
+    package="com.chengying.root.zhongcha" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -19,17 +19,28 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Baidu Map -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/myBlueTheme">
+        android:theme="@style/myBlueTheme" >
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,14 +49,21 @@
         </activity>
         <activity
             android:name="com.chengying.root.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity android:name="com.chengying.root.homePage.HomeActivity"></activity>
-        <activity android:name="com.chengying.root.shaoyishaoPage.ShaoyiShaoActivity"></activity>
-        <activity android:name="com.chengying.root.myPage.MyActivity"></activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name="com.chengying.root.homePage.HomeActivity" />
+        <activity android:name="com.chengying.root.shaoyishaoPage.ShaoyiShaoActivity" />
+        <activity android:name="com.chengying.root.myPage.MyActivity" />
         <activity
             android:name="com.chengying.root.registe.RegistActivity"
-            android:label="regist"></activity>
-        <activity android:name="com.zbar.lib.CaptureActivity"></activity>
+            android:label="regist" />
+        <activity android:name="com.zbar.lib.CaptureActivity" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="103bKDDi8NZ5XNUQYMGgYvaE" />
+
+        <activity android:name="com.chengying.root.map.BaiduMapActivity" >
+        </activity>
     </application>
 
 </manifest>
