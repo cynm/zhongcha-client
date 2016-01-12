@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.chengying.root.login.LoginActivity;
+import com.chengying.root.map.BaiduMapActivity;
 import com.chengying.root.registe.RegistActivity;
 import com.chengying.root.zhongcha.R;
 
@@ -26,6 +27,14 @@ public class HomeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, RegistActivity.class));
+            }
+        });
+        this.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                startActivity(new Intent(HomeActivity.this, BaiduMapActivity.class));
             }
         });
     }
