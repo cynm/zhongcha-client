@@ -11,8 +11,10 @@ public class BaiduMapActivity extends Activity {
     MapView mMapView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceStat
-         SDKInitializer.initialize(this);
+
+        super.onCreate(savedInstanceState);
+
+        SDKInitializer.initialize(getApplicationContext());
          setContentView(R.layout.activity_baidu_map);
         mMapView = (MapView) findViewById(R.id.bmapView);
 
@@ -27,7 +29,7 @@ public class BaiduMapActivity extends Activity {
     protected void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
-        mMapView.onResume();
+         mMapView.onResume();
     }
     @Override
     protected void onPause() {

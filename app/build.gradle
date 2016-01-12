@@ -48,4 +48,7 @@ dependencies {
     compile files('src/main/libs/BaiduLBS_Android.jar')
     compile files('src/main/libs/httpmime-4.1.2.jar')
     compile files('src/main/libs/IndoorscapeAlbumPlugin.jar')
+    compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/IndoorscapeAlbumPlugin.jar')
+    compile files('libs/httpmime-4.1.2.jar')
 }
