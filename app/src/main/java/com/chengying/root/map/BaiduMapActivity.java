@@ -11,7 +11,7 @@ public class BaiduMapActivity extends Activity {
     MapView mMapView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceStat
          SDKInitializer.initialize(this);
          setContentView(R.layout.activity_baidu_map);
         mMapView = (MapView) findViewById(R.id.bmapView);
