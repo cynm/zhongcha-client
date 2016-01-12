@@ -7,6 +7,14 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
 import com.chengying.root.zhongcha.R;
 
+/**
+ * the valiad way to get SHA1 Code:
+ * 1. Create a sined apk,and upakege it
+ * 2. to find CERT.RSA
+ * 3.Open a Teminal, :cd ./android
+ * keytoll -printcert -file CERT.RSA
+ * then get the md5 code and SHA1 code
+ */
 public class BaiduMapActivity extends Activity {
     MapView mMapView;
     @Override
