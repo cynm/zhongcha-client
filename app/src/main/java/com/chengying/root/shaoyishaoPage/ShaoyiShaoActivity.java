@@ -90,6 +90,8 @@ public class ShaoyiShaoActivity extends Activity {
                 mAuthTask.execute((Void) null);
             }
         });
+         ImageShowTask task = new ImageShowTask(this, imageView, "http://img4.imgtn.bdimg.com/it/u=1572458270,4023659670&fm=21&gp=0.jpg");
+         task.execute();
 
     }
 
@@ -97,8 +99,7 @@ public class ShaoyiShaoActivity extends Activity {
         tvGoodsName.setText(map.get("goodsname"));
         tvGoodsPrice.setText(map.get("price"));
         tvUpdateTime.setText(map.get("last_rfeash_time"));
-        ImageShowTask task = new ImageShowTask(this, imageView, map.get("image"));
-        task.execute();
+
     }
 
     public class SmilarGoodsTask extends AsyncTask<Void, Void, Boolean> {

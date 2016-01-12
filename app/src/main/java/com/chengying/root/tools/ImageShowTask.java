@@ -8,6 +8,8 @@ import android.os.Environment;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.chengying.root.zhongcha.R;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,10 +23,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by root on 16-1-10.
+ * testted reult is ok!
  */
 public class ImageShowTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -43,8 +47,8 @@ public class ImageShowTask extends AsyncTask<Void, Void, Boolean> {
      * @see #onPostExecute
      * @see #publishProgress
      */
-    public static Map<String, Bitmap> memmory;
-    public static Map<String, String> loacl;
+    public static Map<String, Bitmap> memmory=new HashMap< >();
+    public static Map<String, String> loacl=new HashMap<>();
     public Bitmap temp;
     private ImageView imageView;
     private String url;
@@ -178,8 +182,8 @@ public class ImageShowTask extends AsyncTask<Void, Void, Boolean> {
         if (aBoolean) {
             this.imageView.setImageBitmap(temp);
         } else {
-            // this.imageView.setImageDrawable();
-            Toast.makeText(context, "图片获取失败", Toast.LENGTH_SHORT).show();
+              this.imageView.setImageResource(R.mipmap.example);
+          //  Toast.makeText(context, "图片获取失败", Toast.LENGTH_SHORT).show();
         }
     }
 }

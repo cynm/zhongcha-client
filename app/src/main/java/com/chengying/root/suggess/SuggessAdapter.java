@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengying.root.tools.ImageShowTask;
 import com.chengying.root.zhongcha.R;
 
 import java.util.List;
@@ -85,6 +87,8 @@ public class SuggessAdapter extends BaseAdapter {
         TextView tvPrice;
         TextView tvUnit;
         TextView tvDistance;
+        ImageView image;
+        image=(ImageView)convertView.findViewById(R.id.near_item);
         tvShopName = (TextView) convertView.findViewById(R.id.shop_name);
         tvGoodsName = (TextView) convertView.findViewById(R.id.goods_name);
         tvPrice = (TextView) convertView.findViewById(R.id.price);
@@ -96,6 +100,7 @@ public class SuggessAdapter extends BaseAdapter {
         tvPrice.setText(data.get(position).get("price"));
         tvUnit.setText(data.get(position).get("unit"));
         tvDistance.setText(data.get(position).get("distance"));
+        new ImageShowTask(context,image,data.get(position).get("pic")).execute();
         return convertView;
     }
 }

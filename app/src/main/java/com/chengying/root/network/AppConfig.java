@@ -14,7 +14,7 @@ public class AppConfig {
     public static AppConfig app = new AppConfig();
     public static int TIMEOUT = 6000;
     public static String CashPath = Environment.getExternalStorageDirectory().getPath() + "/zhongcha/";
-    public String ip = "192.168.1.112";
+    public String ip = "192.168.1.168";
     public String httpAddress;
     private String httpPort;
     private String socketPort = "6000";
