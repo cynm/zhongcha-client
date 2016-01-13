@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -223,7 +225,29 @@ public class ShaoyiShaoActivity extends Activity {
 
                 } else if (resultCode == 1) {
 
-                    Toast.makeText(ShaoyiShaoActivity.this, "not exist", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ShaoyiShaoActivity.this, "not exist", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ShaoyiShaoActivity.this);
+                    builder.setMessage("您是第一个发现这个商品的人，是否立即上传商品信息?");
+                    builder.setTitle("提示");
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            // BaiduMapNavigation.GetLatestBaiduMapApp(this);
+                            Toast.makeText(ShaoyiShaoActivity.this,"new product",1000);
+                        }
+                    });
+
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    builder.create().show();
                 }
             }
         }

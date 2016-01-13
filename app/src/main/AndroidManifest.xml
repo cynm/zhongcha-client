@@ -34,7 +34,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-
         android:supportsRtl="true"
         android:theme="@style/myBlueTheme" >
         <activity
@@ -65,7 +64,8 @@
 
         <activity android:name="com.chengying.root.map.BaiduMapActivity" >
         </activity>
-
+        <activity android:name="com.goodsmanage.UpdateGoodsActivity" >
+        </activity>
     </application>
 
 </manifest>

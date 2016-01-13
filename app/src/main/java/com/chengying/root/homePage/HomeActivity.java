@@ -9,6 +9,7 @@ import com.chengying.root.login.LoginActivity;
 import com.chengying.root.map.BaiduMapActivity;
 import com.chengying.root.registe.RegistActivity;
 import com.chengying.root.zhongcha.R;
+import com.goodsmanage.UpdateGoodsActivity;
 
 public class HomeActivity extends Activity {
 
@@ -35,6 +36,13 @@ public class HomeActivity extends Activity {
 
 
                 startActivity(new Intent(HomeActivity.this, BaiduMapActivity.class));
+            }
+        });
+        this.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(HomeActivity.this, UpdateGoodsActivity.class));
             }
         });
     }

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/windowBackground"
+    tools:context="com.goodsmanage.UpdateGoodsActivity">
+    <include
+        layout="@layout/titlebar_update_goods"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10px" />
+    <RelativeLayout
+    android:id="@+id/goodsPic"
+    android:layout_height="100dp"
+    android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:clickable="true"
+        android:background="@drawable/item_selecter"
+         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品图片"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/example"
+            android:padding="4dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_toStartOf="@+id/imageView" />
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+
+        android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/vm"
+            android:id="@+id/imageView" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/goodsName"
+        android:clickable="true"
+        android:layout_height="50dp"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/item_selecter"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品名称"
+            android:layout_alignParentLeft="true"
+
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
+
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/vm"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/goodsClass"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/item_selecter"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="类别"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
+
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/vm"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/goodsPrice"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/item_selecter"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
+
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/vm"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/goodsSubmit"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/item_selecter"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            />
+
+
+    </RelativeLayout>
+</LinearLayout>
